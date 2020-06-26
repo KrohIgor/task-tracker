@@ -80,6 +80,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void add(Task task) {
+        task.setAddedTime(LocalDateTime.now());
         taskRepository.save(task);
     }
 }
