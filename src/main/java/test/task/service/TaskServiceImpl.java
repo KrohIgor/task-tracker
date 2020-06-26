@@ -62,8 +62,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findAll() {
+    public List<Task> findAllNew() {
         Sort byAddedTime = Sort.by("addedTime").descending();
+        return taskRepository.findAll(byAddedTime);
+    }
+
+    @Override
+    public List<Task> findAllOld() {
+        Sort byAddedTime = Sort.by("addedTime").ascending();
         return taskRepository.findAll(byAddedTime);
     }
 

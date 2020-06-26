@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import test.task.mapper.UserMapper;
-import test.task.model.dto.UserRequestDto;
+import test.task.model.dto.UserRequestEditDto;
 import test.task.model.dto.UserResponseDto;
 import test.task.service.UserService;
 
@@ -45,8 +45,8 @@ public class UserController {
 
     @PutMapping("/update/{usesId}")
     public UserResponseDto updateUser(@PathVariable("usesId") Long id,
-                                      @RequestBody UserRequestDto userRequestDto) {
+                                      @RequestBody UserRequestEditDto userRequestEditDto) {
         return userMapper.getUserResponseDto(userService.updateUser(id,
-                userMapper.getUserFromUserRequestDto(userRequestDto)));
+                userMapper.getUserFromUserRequestEditDto(userRequestEditDto)));
     }
 }

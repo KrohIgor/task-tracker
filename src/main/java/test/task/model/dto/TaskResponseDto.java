@@ -2,7 +2,6 @@ package test.task.model.dto;
 
 import java.time.LocalDateTime;
 import test.task.model.Status;
-import test.task.model.User;
 
 public class TaskResponseDto {
     private Long taskId;
@@ -10,7 +9,7 @@ public class TaskResponseDto {
     private String description;
     private Status status;
     private LocalDateTime addedTime;
-    private User user;
+    private UserResponseDto userResponseDto;
 
     public Long getTaskId() {
         return taskId;
@@ -52,18 +51,18 @@ public class TaskResponseDto {
         this.addedTime = addedTime;
     }
 
-    public User getUser() {
-        return user;
+    public UserResponseDto getUserResponseDto() {
+        return userResponseDto;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserResponseDto(UserResponseDto userResponseDto) {
+        this.userResponseDto = userResponseDto;
     }
 
     @Override
     public String toString() {
         return "TaskResponseDto{" + "taskId=" + taskId + ", title='" + title + '\''
                 + ", description='" + description + '\'' + ", status=" + status
-                + ", addedTime=" + addedTime + ", user=" + user + '}';
+                + ", addedTime=" + addedTime + ", user=" + userResponseDto + '}';
     }
 }

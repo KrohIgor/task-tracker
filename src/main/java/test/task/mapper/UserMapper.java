@@ -3,6 +3,7 @@ package test.task.mapper;
 import org.springframework.stereotype.Component;
 import test.task.model.User;
 import test.task.model.dto.UserRequestDto;
+import test.task.model.dto.UserRequestEditDto;
 import test.task.model.dto.UserResponseDto;
 
 @Component
@@ -23,5 +24,13 @@ public class UserMapper {
         userResponseDto.setLastName(user.getLastName());
         userResponseDto.setEmail(user.getEmail());
         return userResponseDto;
+    }
+
+    public User getUserFromUserRequestEditDto(UserRequestEditDto userRequestEditDto) {
+        User user = new User();
+        user.setFirstName(userRequestEditDto.getFirstName());
+        user.setLastName(userRequestEditDto.getLastName());
+        user.setEmail(userRequestEditDto.getEmail());
+        return user;
     }
 }
