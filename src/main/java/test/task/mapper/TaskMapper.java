@@ -1,5 +1,6 @@
 package test.task.mapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import test.task.model.Status;
 import test.task.model.Task;
@@ -9,6 +10,8 @@ import test.task.model.dto.TaskResponseDto;
 
 @Component
 public class TaskMapper {
+    @Autowired UserMapper userMapper;
+
     public Task getTaskFromTaskRequestDto(TaskRequestDto taskRequestDto) {
         Task task = new Task();
         task.setTitle(taskRequestDto.getTitle());
@@ -24,7 +27,7 @@ public class TaskMapper {
         taskResponseDto.setDescription(task.getDescription());
         taskResponseDto.setStatus(task.getStatus());
         taskResponseDto.setAddedTime(task.getAddedTime());
-        taskResponseDto.setUser(task.getUser());
+        taskResponseDto.setUserResponseDto(userMapper.getUserResponseDto(task.getUser()));
         return taskResponseDto;
     }
 

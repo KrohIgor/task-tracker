@@ -36,12 +36,12 @@ public class TaskController {
                                       Authentication authentication) {
         Task task = taskMapper.getTaskFromTaskRequestDto(taskRequestDto);
         return taskMapper.getTaskResponseDto(taskService.createTask(task,
-                /*authentication.getName()*/ null));
+                authentication.getName()));
     }
 
     @PutMapping("/edit/{taskId}")
     public TaskResponseDto editTask(@PathVariable("taskId") Long taskId,
-                                      @RequestBody TaskRequestEditDto taskRequestEditDto) {
+                                    @RequestBody TaskRequestEditDto taskRequestEditDto) {
         return taskMapper.getTaskResponseDto(taskService.updateTask(taskId,
                 taskMapper.getTaskFromTaskRequestEditDto(taskRequestEditDto)));
     }
