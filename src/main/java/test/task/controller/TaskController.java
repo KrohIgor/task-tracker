@@ -19,15 +19,12 @@ import test.task.model.dto.TaskRequestDto;
 import test.task.model.dto.TaskRequestEditDto;
 import test.task.model.dto.TaskResponseDto;
 import test.task.service.TaskService;
-import test.task.service.UserService;
 
 @RestController
 @RequestMapping("/task")
 public class TaskController {
     @Autowired
     private TaskService taskService;
-    @Autowired
-    private UserService userService;
     @Autowired
     private TaskMapper taskMapper;
 
@@ -65,9 +62,16 @@ public class TaskController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/all")
-    public List<TaskResponseDto> findAllTasks() {
-        return taskService.findAll().stream()
+    @GetMapping("/all/new")
+    public List<TaskResponseDto> findAllNewTasks() {
+        return taskService.findAllNew().stream()
+                .map(t -> taskMapper.getTaskResponseDto(t))
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/all/old")
+    public List<TaskResponseDto> findAllOldTasks() {
+        return taskService.findAllOld().stream()
                 .map(t -> taskMapper.getTaskResponseDto(t))
                 .collect(Collectors.toList());
     }

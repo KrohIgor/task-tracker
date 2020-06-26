@@ -14,7 +14,9 @@ public interface TaskService {
 
     List<Task> findAllByStatus(String status);
 
-    List<Task> findAll();
+    List<Task> findAllNew();
+
+    List<Task> findAllOld();
 
     Task changedUser(Long taskId, Long userId);
 
