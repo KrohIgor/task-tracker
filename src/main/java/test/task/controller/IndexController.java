@@ -10,6 +10,6 @@ public class IndexController {
 
     @GetMapping
     public String sayHello() {
-        return "hello";
+        return "It is task tracker!";
     }
 }

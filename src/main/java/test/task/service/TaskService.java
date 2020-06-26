@@ -4,7 +4,7 @@ import java.util.List;
 import test.task.model.Task;
 
 public interface TaskService {
-    Task createTask(Task task);
+    Task createTask(Task task, String email);
 
     Task updateTask(Long taskId, Task task);
 
@@ -17,4 +17,6 @@ public interface TaskService {
     List<Task> findAll();
 
     Task changedUser(Long taskId, Long userId);
+
+    void add(Task task);
 }

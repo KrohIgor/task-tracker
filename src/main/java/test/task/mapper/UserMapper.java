@@ -7,7 +7,7 @@ import test.task.model.dto.UserResponseDto;
 
 @Component
 public class UserMapper {
-    public User getUserFromUserRequestDto(UserRequestDto userRequestDto){
+    public User getUserFromUserRequestDto(UserRequestDto userRequestDto) {
         User user = new User();
         user.setFirstName(userRequestDto.getFirstName());
         user.setLastName(userRequestDto.getLastName());
@@ -15,6 +15,7 @@ public class UserMapper {
         user.setPassword(userRequestDto.getPassword());
         return user;
     }
+
     public UserResponseDto getUserResponseDto(User user) {
         UserResponseDto userResponseDto = new UserResponseDto();
         userResponseDto.setId(user.getId());

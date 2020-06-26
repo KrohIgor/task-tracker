@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import test.task.mapper.UserMapper;
 import test.task.model.dto.UserRequestDto;
@@ -25,8 +26,8 @@ public class UserController {
     private UserMapper userMapper;
 
     @GetMapping("/all")
-    public List<UserResponseDto> allUsers() {
-        return userService.findAll().stream()
+    public List<UserResponseDto> allUsers(@RequestParam(value = "numberPage") int page) {
+        return userService.findAll(page).stream()
                 .map(u -> userMapper.getUserResponseDto(u))
                 .collect(Collectors.toList());
     }

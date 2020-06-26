@@ -1,17 +1,17 @@
 package test.task.model.dto;
 
 public class UserResponseDto {
-    private Long Id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -40,7 +40,7 @@ public class UserResponseDto {
 
     @Override
     public String toString() {
-        return "UserResponseDto{" + "Id=" + Id + ", firstName='" + firstName + '\''
+        return "UserResponseDto{" + "Id=" + id + ", firstName='" + firstName + '\''
                 + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + '}';
     }
 }

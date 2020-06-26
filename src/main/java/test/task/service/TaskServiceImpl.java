@@ -1,11 +1,9 @@
 package test.task.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import test.task.model.Status;
@@ -20,31 +18,34 @@ public class TaskServiceImpl implements TaskService {
     private TaskRepository taskRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private StatusService statusService;
 
     @Override
-    public Task createTask(Task task) {
+    public Task createTask(Task task, String email) {
+        task.setAddedTime(LocalDateTime.now());
+        task.setStatus(statusService.getStatusByName(task.getStatus().getStatusName()));
+        task.setUser(userRepository.findByEmail(email));
         return taskRepository.save(task);
     }
 
     @Override
     public Task updateTask(Long taskId, Task task) {
-        task.setTaskId(taskId);
-        taskRepository.save(task);
-        return task;
+        Task taskFromDB = taskRepository.findById(taskId).orElseThrow(() ->
+                new EntityNotFoundException("Not found Task with id - " + taskId));
+        taskFromDB.setTitle(task.getTitle());
+        taskFromDB.setDescription(task.getDescription());
+        taskRepository.save(taskFromDB);
+        return taskFromDB;
     }
 
     @Override
     public Task changeStatus(Long taskId, String status) {
-        Task task = new Task();
-        task.setTaskId(taskId);
-        task.setStatus(Status.of(status));
         Task taskFromDB = taskRepository.findById(taskId).orElseThrow(() ->
                 new EntityNotFoundException("Not found Task with id - " + taskId));
-        task.setTitle(taskFromDB.getTitle());
-        task.setDescription(taskFromDB.getDescription());
-        task.setAddedTime(taskFromDB.getAddedTime());
-        task.setUser(taskFromDB.getUser());
-        return task;
+        taskFromDB.setStatus(statusService.getStatusByName(Status.of(status).getStatusName()));
+        taskRepository.save(taskFromDB);
+        return taskFromDB;
     }
 
     @Override
@@ -54,28 +55,31 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> findAllByStatus(String status) {
-        return null;
+        Sort byAddedTime = Sort.by("addedTime").descending();
+        return taskRepository.findAllByStatus(statusService
+                .getStatusByName(Status.of(status)
+                        .getStatusName()), byAddedTime);
     }
 
     @Override
     public List<Task> findAll() {
-        Sort byAddedTime = Sort.by("addedTime");
+        Sort byAddedTime = Sort.by("addedTime").descending();
         return taskRepository.findAll(byAddedTime);
     }
 
     @Override
     public Task changedUser(Long taskId, Long userId) {
-        Task task = new Task();
-        task.setTaskId(taskId);
         User userFromDB = userRepository.findById(userId).orElseThrow(() ->
                 new EntityNotFoundException("Not found User with id - " + userId));
-        task.setUser(userFromDB);
         Task taskFromDB = taskRepository.findById(taskId).orElseThrow(() ->
                 new EntityNotFoundException("Not found Task with id - " + taskId));
-        task.setStatus(taskFromDB.getStatus());
-        task.setTitle(taskFromDB.getTitle());
-        task.setDescription(taskFromDB.getDescription());
-        task.setAddedTime(taskFromDB.getAddedTime());
-        return task;
+        taskFromDB.setUser(userFromDB);
+        taskRepository.save(taskFromDB);
+        return taskFromDB;
+    }
+
+    @Override
+    public void add(Task task) {
+        taskRepository.save(task);
     }
 }
