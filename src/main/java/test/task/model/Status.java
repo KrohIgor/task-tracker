@@ -1,5 +1,6 @@
 package test.task.model;
 
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -42,6 +43,24 @@ public class Status {
 
     public void setStatusName(StatusName statusName) {
         this.statusName = statusName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Status status = (Status) o;
+        return Objects.equals(statusId, status.statusId)
+                && statusName == status.statusName;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(statusId, statusName);
     }
 
     @Override
