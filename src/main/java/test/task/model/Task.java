@@ -1,6 +1,7 @@
 package test.task.model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -70,6 +71,28 @@ public class Task {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Task task = (Task) o;
+        return Objects.equals(taskId, task.taskId)
+                && Objects.equals(title, task.title)
+                && Objects.equals(description, task.description)
+                && Objects.equals(status, task.status)
+                && Objects.equals(addedTime, task.addedTime)
+                && Objects.equals(user, task.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(taskId, title, description, status, addedTime, user);
     }
 
     @Override
