@@ -10,6 +10,8 @@ import test.task.service.UserService;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
+    private static final String ROLE_STUB = "User";
+
     private final UserService userService;
 
     @Autowired
@@ -24,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user != null) {
             userBuilder = org.springframework.security.core.userdetails.User.withUsername(userName);
             userBuilder.password(user.getPassword());
-            userBuilder.roles("User");
+            userBuilder.roles(ROLE_STUB);
         } else {
             throw new UsernameNotFoundException("User's name not found!");
         }

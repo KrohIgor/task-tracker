@@ -29,6 +29,16 @@ public class InjectDataController {
         statusService.add(Status.of("Done"));
     }
 
+    @PostConstruct
+    public void injectUserToDb() {
+        User user = new User();
+        user.setFirstName("Bob");
+        user.setLastName("Jonson");
+        user.setEmail("bob@ukr.net");
+        user.setPassword("1234");
+        userService.add(user);
+    }
+
     @PostMapping("/user")
     public String injectUsersToDB() {
         for (int i = 0; i < 50; i++) {
@@ -52,6 +62,6 @@ public class InjectDataController {
             task.setStatus(statusService.findById((long) (i % 3) + 1).get());
             taskService.add(task);
         }
-        return "50 users successfully added to DB!";
+        return "50 tasks successfully added to DB!";
     }
 }
