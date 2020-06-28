@@ -1,6 +1,7 @@
 package test.task.model.dto;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import test.task.model.Status;
 
 public class TaskResponseDto {
@@ -57,6 +58,28 @@ public class TaskResponseDto {
 
     public void setUserResponseDto(UserResponseDto userResponseDto) {
         this.userResponseDto = userResponseDto;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        TaskResponseDto that = (TaskResponseDto) o;
+        return Objects.equals(taskId, that.taskId)
+                && Objects.equals(title, that.title)
+                && Objects.equals(description, that.description)
+                && Objects.equals(status, that.status)
+                && Objects.equals(addedTime, that.addedTime)
+                && Objects.equals(userResponseDto, that.userResponseDto);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(taskId, title, description, status, addedTime, userResponseDto);
     }
 
     @Override
